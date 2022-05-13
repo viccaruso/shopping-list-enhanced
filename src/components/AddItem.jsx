@@ -7,7 +7,9 @@ export default function AddItem() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (!textContent) return;
     handleAddItem(textContent);
+    setTextContent('');
   };
 
   return (

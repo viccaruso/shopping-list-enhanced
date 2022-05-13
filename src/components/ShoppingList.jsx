@@ -1,4 +1,5 @@
 import { useList } from '../context/ListContext';
+import ListItem from './ListItem';
 
 export default function ShoppingList() {
   const { listState } = useList();
@@ -6,7 +7,7 @@ export default function ShoppingList() {
   return (
     <>
       {listState.map((item) => (
-        <p key={item.id}>{item.item}</p>
+        <ListItem key={item.id} item={item} />
       ))}
     </>
   );

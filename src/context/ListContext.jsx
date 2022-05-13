@@ -1,15 +1,25 @@
 import { createContext, useContext, useReducer } from 'react';
 
 const startingState = [
-  { id: 1, item: 'Cheez Whiz' },
-  { id: 2, item: 'Kraft American Singles' },
-  { id: 3, item: 'Velveeta' },
+  { id: 1, item: 'Cheez Whiz', complete: false },
+  { id: 2, item: 'Kraft American Singles', complete: false },
+  { id: 3, item: 'Velveeta', complete: true },
 ];
 
 function listReducer(state, action) {
   switch (action.type) {
     case 'ADD_ITEM':
-      return [...state, { id: Date.now(), item: action.payload.item }];
+      return [
+        ...state,
+        { id: Date.now(), item: action.payload.item, complete: false },
+      ];
+    case 'TOGGLE_COMPLETE':
+      return state.map((item) => {
+        if (item.id === action.payload.id) {
+          return { ...item, complete: action.payload.complete };
+        }
+        return item;
+      });
     default:
       throw new Error('Invalid action performed in list reducer');
   }
@@ -21,15 +31,23 @@ export function ListProvider({ children }) {
   const [listState, dispatch] = useReducer(listReducer, startingState);
 
   function handleAddItem(item) {
-    console.log('Dispatching ADD_ITEM');
     dispatch({
       type: 'ADD_ITEM',
       payload: { item },
     });
   }
 
+  function handleToggleComplete(id, boolean) {
+    dispatch({
+      type: 'TOGGLE_COMPLETE',
+      payload: { id, complete: boolean },
+    });
+  }
+
   return (
-    <ListContext.Provider value={{ handleAddItem, listState }}>
+    <ListContext.Provider
+      value={{ handleAddItem, handleToggleComplete, listState }}
+    >
       {children}
     </ListContext.Provider>
   );
