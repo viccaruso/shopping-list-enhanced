@@ -1,9 +1,9 @@
 import { createContext, useContext, useReducer } from 'react';
 
-const listState = [
-  { id: Date.now(), item: 'Cheez Whiz' },
-  { id: Date.now(), item: 'Kraft American Singles' },
-  { id: Date.now(), item: 'Velveeta' },
+const startingState = [
+  { id: 1, item: 'Cheez Whiz' },
+  { id: 2, item: 'Kraft American Singles' },
+  { id: 3, item: 'Velveeta' },
 ];
 
 function listReducer(state, action) {
@@ -18,14 +18,14 @@ function listReducer(state, action) {
 export const ListContext = createContext();
 
 export function ListProvider({ children }) {
-  const [state, dispatch] = useReducer(listReducer, listState);
+  const [listState, dispatch] = useReducer(listReducer, startingState);
 
   function handleAddItem(item) {
+    console.log('Dispatching ADD_ITEM');
     dispatch({
       type: 'ADD_ITEM',
-      payload: item,
+      payload: { item },
     });
-    console.log(state);
   }
 
   return (
