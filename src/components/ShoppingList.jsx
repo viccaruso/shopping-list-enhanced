@@ -1,11 +1,11 @@
 import { useList } from '../context/ListContext';
 
 export default function ShoppingList() {
-  const shoppingList = useList();
-  console.log(shoppingList);
+  const { listState } = useList();
+  console.log(listState);
   return (
     <>
-      {shoppingList.listState.map((item) => (
+      {listState.map((item) => (
         <p key={item.id}>{item.item}</p>
       ))}
     </>
