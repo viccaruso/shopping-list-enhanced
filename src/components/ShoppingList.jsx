@@ -1,5 +1,13 @@
-import React from 'react';
+import { useList } from '../context/ListContext';
 
 export default function ShoppingList() {
-  return <div>ShoppingList</div>;
+  const shoppingList = useList();
+  console.log(shoppingList);
+  return (
+    <>
+      {shoppingList.listState.map((item) => (
+        <p key={item.id}>{item.item}</p>
+      ))}
+    </>
+  );
 }
