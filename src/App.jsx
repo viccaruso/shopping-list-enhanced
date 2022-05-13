@@ -1,3 +1,13 @@
+import AddItem from './components/AddItem';
+import Header from './components/Header';
+import ShoppingList from './components/ShoppingList';
+
 export default function App() {
-  return <h1>Hello World</h1>;
+  return (
+    <>
+      <Header />
+      <AddItem />
+      <ShoppingList />
+    </>
+  );
 }
