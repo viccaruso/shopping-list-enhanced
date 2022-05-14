@@ -17,7 +17,15 @@ export default function ListItem({ item }) {
         checked={isChecked}
         onChange={(event) => handleCheckbox(event)}
       />
-      <span>{item.item}</span>
+      <span
+        style={
+          isChecked
+            ? { textDecoration: 'line-through' }
+            : { textDecoration: 'none' }
+        }
+      >
+        {item.item}
+      </span>
     </div>
   );
 }

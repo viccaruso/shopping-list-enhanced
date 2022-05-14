@@ -20,6 +20,8 @@ function listReducer(state, action) {
         }
         return item;
       });
+    case 'CLEAR_LIST':
+      return [];
     default:
       throw new Error('Invalid action performed in list reducer');
   }
@@ -44,9 +46,20 @@ export function ListProvider({ children }) {
     });
   }
 
+  function handleClearList() {
+    dispatch({
+      type: 'CLEAR_LIST',
+    });
+  }
+
   return (
     <ListContext.Provider
-      value={{ handleAddItem, handleToggleComplete, listState }}
+      value={{
+        handleAddItem,
+        handleToggleComplete,
+        handleClearList,
+        listState,
+      }}
     >
       {children}
     </ListContext.Provider>
