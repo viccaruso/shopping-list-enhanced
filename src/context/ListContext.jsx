@@ -13,6 +13,8 @@ function listReducer(state, action) {
         ...state,
         { id: Date.now(), item: action.payload.item, complete: false },
       ];
+    case 'DELETE_ITEM':
+      return state.filter((item) => item.id !== action.payload.id);
     case 'TOGGLE_COMPLETE':
       return state.map((item) => {
         if (item.id === action.payload.id) {
@@ -52,12 +54,20 @@ export function ListProvider({ children }) {
     });
   }
 
+  function handleDeleteItem(id) {
+    dispatch({
+      type: 'DELETE_ITEM',
+      payload: { id },
+    });
+  }
+
   return (
     <ListContext.Provider
       value={{
         handleAddItem,
         handleToggleComplete,
         handleClearList,
+        handleDeleteItem,
         listState,
       }}
     >

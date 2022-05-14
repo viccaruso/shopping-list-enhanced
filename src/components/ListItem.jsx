@@ -3,11 +3,15 @@ import { useList } from '../context/ListContext';
 
 export default function ListItem({ item }) {
   const [isChecked, setIsChecked] = useState(item.complete);
-  const { handleToggleComplete } = useList();
+  const { handleToggleComplete, handleDeleteItem } = useList();
 
   const handleCheckbox = (event) => {
     handleToggleComplete(item.id, event.target.checked);
     setIsChecked(event.target.checked);
+  };
+
+  const handleDelete = () => {
+    handleDeleteItem(item.id);
   };
 
   return (
@@ -26,6 +30,7 @@ export default function ListItem({ item }) {
       >
         {item.item}
       </span>
+      <button onClick={handleDelete}>Delete</button>
     </div>
   );
 }
