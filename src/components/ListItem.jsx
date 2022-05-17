@@ -32,6 +32,7 @@ export default function ListItem({ item }) {
       <>
         <form onSubmit={saveEdit}>
           <input
+            htmlFor="submit"
             type="text"
             value={item.item}
             onChange={(e) => setFormValue(e.target.value)}
@@ -65,7 +66,9 @@ export default function ListItem({ item }) {
         onChange={(event) => handleCheckbox(event)}
       />
       {content}
-      <button onClick={handleDelete}>Delete</button>
+      <button aria-label={`delete ${item.item} button`} onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
 }
