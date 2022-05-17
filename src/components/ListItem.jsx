@@ -4,8 +4,9 @@ import { useList } from '../context/ListContext';
 export default function ListItem({ item }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isChecked, setIsChecked] = useState(item.complete);
-  const [formValue, setFormValue] = useState('');
-  const { handleToggleComplete, handleDeleteItem } = useList();
+  const [value, setValue] = useState(item.item);
+  const { handleToggleComplete, handleDeleteItem, handleUpdateItem } =
+    useList();
 
   const handleCheckbox = (event) => {
     handleToggleComplete(item.id, event.target.checked);
@@ -21,8 +22,9 @@ export default function ListItem({ item }) {
   };
 
   const saveEdit = (event) => {
-    console.log(event.target.value);
-    setIsEditing(!isEditing);
+    event.preventDefault();
+    handleUpdateItem(item.id, value);
+    setIsEditing(false);
   };
 
   let content;
@@ -32,9 +34,10 @@ export default function ListItem({ item }) {
       <>
         <form onSubmit={saveEdit}>
           <input
+            htmlFor="submit"
             type="text"
-            value={item.item}
-            onChange={(e) => setFormValue(e.target.value)}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
           />
           <button type="submit">Save</button>
         </form>
@@ -65,7 +68,9 @@ export default function ListItem({ item }) {
         onChange={(event) => handleCheckbox(event)}
       />
       {content}
-      <button onClick={handleDelete}>Delete</button>
+      <button aria-label={`delete ${item.item} button`} onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
 }
